@@ -1,0 +1,18 @@
+<div style="display: flex;justify-content: space-around; margin: 5rem;">
+<agm-map [latitude]="latc"
+ [longitude]="lngc"
+ [zoom]="zoom" 
+  style="height: 70vh;width: 80vw;">
+<agm-marker [latitude]="latc" [longitude]="lngc">
+    <agm-info-window>
+        <h3><strong>You are here!</strong></h3>
+    </agm-info-window>
+</agm-marker>
+<agm-marker [latitude]="latd" [longitude]="lngd" [iconUrl]="iconUrl">
+    <agm-info-window>
+        <h3><strong>{{username}} is bringing your order!</strong></h3>
+    </agm-info-window>
+</agm-marker>
+
+</agm-map>
+</div>

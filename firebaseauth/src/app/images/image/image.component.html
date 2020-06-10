@@ -1,36 +1,51 @@
-<div class="card" style="width:25rem" *ngIf="ismerchant">
-    <div class="card-body">
-        <form [formGroup]="formTemplate" (submit)="onSubmit(formTemplate.value)">
-            <div class="text-center">
-                <img [src]="imgSrc" width="350px" height="250px" (click)="fileUploader.click()">
-            </div>
-            <div class="form-group">
-                <label>Select file to upload</label>
-                <input type="file" accept="image/*" class="form-control" #fileUploader formControlName="imageUrl" (change)="showPreview($event)">
-                <div class="text-danger" *ngIf="isSubmitted && formControls.imageUrl.errors?.required">This field is required.
-                </div>
-            </div>
-            <div class="form-group">
-                <input class="form-control" formControlName="productname" placeholder="productname">
+<app-navbar  [merchantid]='uid'></app-navbar>
+
+
+<div class="container" style="margin: 50px;">
+
+<mat-card  style="display: flex;flex-direction: column;  align-items: center;" *ngIf="ismerchant">
+
+
+        <mat-card-content [formGroup]="formTemplate" style="display:flex;flex-direction: column;">
+   
+
+
+
+           <mat-form-field style="width: 50vw;">
+                <input matInput  formControlName="productname" placeholder="productname" type="text" required>
                 <div class="text-danger" *ngIf="isSubmitted && formControls.productname.errors?.required">This field is required.
                 </div>
-            </div>
-            <div class="form-group">
-                <input class="form-control" formControlName="price" placeholder="price">
+            </mat-form-field>
+
+
+            <mat-form-field style="width: 50vw;">
+                <input matInput  formControlName="price" placeholder="price" type="number" required>
                 <div class="text-danger" *ngIf="isSubmitted && formControls.price.errors?.required">This field is required.
                 </div>
-            </div>
-            <div class="form-group">
-                <input class="form-control" formControlName="description" placeholder="description">
+            </mat-form-field>
+
+
+            <mat-form-field style="width: 50vw;">
+                <textarea matInput  type="text" formControlName="description" placeholder="description" rows="6" required></textarea>
                 <div class="text-danger" *ngIf="isSubmitted && formControls.description.errors?.required">This field is required.
                 </div>
-            </div>
-            <div class="form-row">
+            </mat-form-field>
 
-                <div class="form-group col-md-6">
-                    <button type="submit" class="btn btn-success btn-block float-right">Submit</button>
+            <div style="width: 50vw;">
+                <input  type="file" accept="image/*"  #fileUploader formControlName="imageUrl" (change)="showPreview($event)" required>
+                <div class="text-danger" *ngIf="isSubmitted && formControls.imageUrl.errors?.required">This field is required.
                 </div>
-            </div>
-        </form>
-    </div>
+           </div>
+
+
+        </mat-card-content>
+
+
+        <mat-card-actions >
+                
+            <button  (click)="onSubmit(formTemplate.value)" type="submit" mat-raised-button color="warn" [disabled]="!formTemplate.valid || !disable">
+                Submit</button>
+       
+    </mat-card-actions>
+</mat-card>
 </div>

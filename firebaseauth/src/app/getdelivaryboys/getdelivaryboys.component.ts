@@ -11,6 +11,11 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AngularFireStorage } from "@angular/fire/storage";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA,MatDialogConfig} from '@angular/material';
 import {AdddelivaryboyComponent} from "../adddelivaryboy/adddelivaryboy.component"
+import {DeliveryboyserviceService} from "../dservice/deliveryboyservice.service"
+import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from "@angular/material";
+import { environment } from "src/environments/environment";
+
 @Component({
   selector: 'app-getdelivaryboys',
   templateUrl: './getdelivaryboys.component.html',
@@ -25,8 +30,11 @@ export class GetdelivaryboysComponent implements OnInit,OnChanges {
     private auth: AuthService,
     private router: Router,
     private afAuth: AngularFireAuth,
-
-    private db: AngularFirestore,public dialog: MatDialog) { 
+    private dser :DeliveryboyserviceService
+    ,private httpClient: HttpClient,
+    public snackBar: MatSnackBar
+,
+    private db: AngularFirestore,public dialog: MatDialog,) { 
     
     }
 
@@ -35,24 +43,27 @@ export class GetdelivaryboysComponent implements OnInit,OnChanges {
     console.log("olduser", this.merid);
       this.db
       .collection("Delivaryboys", ref => ref.where("merchantid", "==", this.merid))
-      .get()
+      .valueChanges({idField: 'id'})
       .subscribe(snapshot => {
-        if (snapshot.empty) {
+        this.delivaryboys = []
+        if (!snapshot) {
           console.log("No matching documents.");
           return;
         }
+        console.log("snapshot",snapshot)
         snapshot.forEach(doc => {
           var x = {
-            name:doc.data()['name'],
-            phone:doc.data()['phone'],
-            id:doc.id
+            name:doc['name'],
+            phone:doc['phone'],
+            id:doc['id'],
+            email:doc['email']
           }
         this.delivaryboys.push(x)
         });
         console.log(this.delivaryboys)
     });
     
-   
+ this.checkupdates();  
 }
 
 
@@ -72,15 +83,73 @@ adddelivaryboys(){
 };
 const dialogRef= this.dialog.open(AdddelivaryboyComponent, dialogConfig);
 dialogRef.afterClosed().subscribe(data=>{
-  console.log(data)
+  console.log("data from dboy",data)
   var x ={
     name:data['name'],
     phone:data['phone'],
-    id:data['id']
+    id:data['id'],
+    email:data['email']
   }
-  this.delivaryboys.push(x);
+  let url = 'http://localhost:3000/sendmail'
+  let info = `<h3>Congrats!!</h3><p> Your assigned as a delivery boy for the project N-EATS-NC-APP and your userid is <strong>${x['id']}</strong>.Use this id for logging into the location tracking app</p><br><h3>Thank you!</h3>`
+  let  post = {email:x['email'],subject:"Regarding N-Eats delivery service",info:info,token:environment.token};
+  //send email notification to the d boy;
+  console.log("post data ",post)
+
+  this.sendemail(url, post).subscribe((val) => {
+    console.log("POST call successful value returned in body", 
+                val);
+                this.openSnackBar("Email sent ","success");
+    },
+response => {
+    console.log("POST call in error", response);
+    this.openSnackBar("Email not sent ","try again");
+   this.db.collection('/Delivaryboys').doc(x['id']).delete().then(res=>{
+     console.log("deleted ",res);
+   }).catch(err=>{
+     console.log("error ",err);
+   })
+            },
+() => {
+    console.log("The POST observable is now completed.");
+      });
+
+
+
+  // this.delivaryboys.push(x);
 })
+}
+checkupdates()
+{
+  let x = this.db.collection('/Delivaryboys').valueChanges().subscribe((userData) => {
+    // put your logic here
+    // console.log(userData);
+});
+
+
+
 }
 
 
+delete(index)
+{
+console.log(index,this.delivaryboys[index])
+this.dser.deletedboy(this.delivaryboys[index].id);
+this.delivaryboys = this.delivaryboys.filter(item => item.id !== this.delivaryboys[index].id);
+console.log("new ",this.delivaryboys);
+}
+
+
+
+sendemail(url,post)
+{
+  return this.httpClient.post<any>(url, post);
+}
+
+openSnackBar(message,success) {
+  this.snackBar
+  .open(message,success , {
+    duration: 2000,
+  });
+}
 }

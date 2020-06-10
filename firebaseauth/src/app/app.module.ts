@@ -50,6 +50,18 @@ import { AdddelivaryboyComponent } from './adddelivaryboy/adddelivaryboy.compone
 import { GetdelivaryboysComponent } from './getdelivaryboys/getdelivaryboys.component';
 import { AssigndelivaryboyComponent } from './assigndelivaryboy/assigndelivaryboy.component';
 import {MatRadioModule} from '@angular/material/radio';
+import { CustmailboxComponent } from './custmailbox/custmailbox.component';
+import { MatCheckboxModule} from '@angular/material';
+import { SendcustommsgComponent } from './sendcustommsg/sendcustommsg.component';
+import { GeneratemsgmodalComponent } from './generatemsgmodal/generatemsgmodal.component';
+import { MerchantmailboxComponent } from './merchantmailbox/merchantmailbox.component';
+import { MatTabsModule, MatSidenavModule } from '@angular/material';
+import { CommonModule } from '@angular/common';
+import { MatNativeDateModule} from '@angular/material';
+import {AgmCoreModule} from '@agm/core';
+import { DboylocationComponent } from './dboylocation/dboylocation.component';
+import { HttpClientModule } from '@angular/common/http';
+import {TextFieldModule} from '@angular/cdk/text-field';
 
 @NgModule({
   declarations: [
@@ -81,6 +93,11 @@ import {MatRadioModule} from '@angular/material/radio';
     AdddelivaryboyComponent,
     GetdelivaryboysComponent,
     AssigndelivaryboyComponent,
+    CustmailboxComponent,
+    SendcustommsgComponent,
+    GeneratemsgmodalComponent,
+    MerchantmailboxComponent,
+    DboylocationComponent,
   
 
   ],
@@ -96,6 +113,9 @@ import {MatRadioModule} from '@angular/material/radio';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
+    AgmCoreModule.forRoot({
+      apiKey:'AIzaSyA2KFalX3_Eapr_OgMKuoL12362hAiLRWs'
+    }),
     ReactiveFormsModule,
     MatBadgeModule,
     MatSliderModule,
@@ -118,18 +138,32 @@ import {MatRadioModule} from '@angular/material/radio';
     FilterPipeModule,
     MatDividerModule,
     MatListModule,
-    MatRadioModule
+    MatRadioModule,
+    MatCheckboxModule,
+    MatSidenavModule,
+    MatTabsModule,
+    CommonModule,
+     MatButtonModule,
+     MatToolbarModule, 
+     MatNativeDateModule,
+      MatIconModule, 
+      MatSidenavModule,
+       MatListModule,
+       HttpClientModule
+
   ],
-  entryComponents: [
+exports:[CommonModule, MatButtonModule, MatToolbarModule, MatNativeDateModule, MatIconModule, MatSidenavModule, MatListModule],
+    entryComponents: [
     MercahntmodalComponent,
     AlertmodalComponent,
     SuccessmodalComponent,
     PaymentdetailsmodalComponent,
     AddressmodalComponent,
     AdddelivaryboyComponent,
-    AssigndelivaryboyComponent
+    AssigndelivaryboyComponent,
+    GeneratemsgmodalComponent
   ],
-  providers: [],
+  providers: [MatSidenavModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

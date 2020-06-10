@@ -72,7 +72,7 @@
                      </div>
                     <a href="#">Forgot Password?</a>
     
-                    <input type="submit" class="btn" value="Register">
+                    <input *ngIf="isdisabled"  type="submit" class="btn" value="Register">
                     <div class="row">
                     <div class="col-12">
                         <p style="float: left ;	color: #555;">Already have the account </p>

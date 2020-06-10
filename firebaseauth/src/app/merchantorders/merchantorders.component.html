@@ -1,10 +1,9 @@
+<app-navbar  [merchantid]='merid'></app-navbar>
 
 <div class="container">
 
     <div *ngIf="orderflag">
-    <mat-form-field style="width: 100%;">
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" style="width: 90%;">
-      </mat-form-field>
+
 
         <div *ngFor="let order of orders; let i = index">
             <div >
@@ -41,6 +40,16 @@
     
     </div>
 </div>
+
+<div *ngIf="nodoc">
+    <mat-card>
+        <mat-card-content style="font-family: 'Permanent Marker', cursive ; font-size: 3vw;" >
+          No orders
+        </mat-card-content>
+     
+      </mat-card>
+    
+</div >
 
 <div *ngIf="!orderflag">
 <h1>Loading..........</h1>

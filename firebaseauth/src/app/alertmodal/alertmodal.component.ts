@@ -8,10 +8,13 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 })
 export class AlertmodalComponent implements OnInit {
 name:any;
+message1:any;
+message2:any;
   constructor(
     private dialogRef: MatDialogRef<AlertmodalComponent>,
     @Inject(MAT_DIALOG_DATA) data) {
-
+    this.message1 = data.message1;
+    this.message2=data.message2;
     this.name = data.name;
     console.log(this.name)
 }

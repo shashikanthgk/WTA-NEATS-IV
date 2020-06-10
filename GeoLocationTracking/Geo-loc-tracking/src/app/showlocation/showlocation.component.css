@@ -1,0 +1,9 @@
+.example-form {
+    min-width: 50vw;
+    max-width: 60vw;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }

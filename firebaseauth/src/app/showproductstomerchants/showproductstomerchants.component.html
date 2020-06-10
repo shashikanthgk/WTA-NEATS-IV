@@ -1,3 +1,4 @@
+<app-navbar  [merchantid]='merid'></app-navbar>
 
 
 <div class="container">
@@ -6,14 +7,14 @@
       <div class="mat row">
       <div class="top-body">
       <h1 style="font-family: 'Squada One';   color: #eb1497;
-      ">product name :{{ product?.name }}</h1>
+      "> Name :{{ product?.name }}</h1>
 
-      <h2 style="color: blueviolet;"> <mdb-badge warning="true" >product price :</mdb-badge>
+      <h4 style="color: blueviolet;"> <mdb-badge warning="true" > Price :</mdb-badge>
         
        <mdb-badge success="true" style="margin-left: 10px;"> RS. {{ product?.price }}</mdb-badge>
-        </h2>
+        </h4>
 
-            <h2 style="color: purple;"><mdb-badge primary="true" >product description : </mdb-badge> {{ product?.description }}</h2>
+            <h4 style="color: purple;"><mdb-badge primary="true" > Description : </mdb-badge> {{ product?.description }}</h4>
 
       </div>
       <div class="bot-body">
@@ -25,8 +26,8 @@
     <div class="row" style="align-items: center;display: flex;justify-content: space-evenly;">
       <mat-card-actions style="display: flex;align-items: center;justify-content: center;">
       
-     <button (click)="openAlertwindow(i)"   mat-raised-button color="warn" class="fab">Delete Item</button>
-     <button (click)="openDialog(i)"   mat-raised-button color="primary" class="fab">Update Item</button>
+     <button (click)="openAlertwindow(i)"   mat-raised-button color="warn" class="fab">Delete </button>
+     <button (click)="openDialog(i)"   mat-raised-button color="primary" class="fab">Update </button>
 
       </mat-card-actions>
     </div>

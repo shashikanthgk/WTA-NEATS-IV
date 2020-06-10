@@ -22,6 +22,7 @@ export class MerchantordersComponent implements OnInit {
   subscription: Subscription;
   orders:any=[]
   orderflag:boolean=false
+  nodoc:boolean=false;
   constructor( private auth: AuthService,
     private router: Router,
     private db: AngularFirestore,private filterPipe: FilterPipe,private routeractivated: ActivatedRoute,
@@ -55,7 +56,8 @@ temp:any=[]
   .get()
   .subscribe(snapshot => {
     if (snapshot.empty) {
-      this.orderflag = false;
+      this.orderflag = true;
+      this.nodoc = true;
       console.log("No matching documents.");
       return;
     }

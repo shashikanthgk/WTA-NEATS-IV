@@ -5,7 +5,7 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import { combineLatest, timer, from } from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA,MatDialogConfig} from '@angular/material';
 import {PaymentdetailsmodalComponent} from "../paymentdetailsmodal/paymentdetailsmodal.component";
-
+import {DeliveryboyserviceService} from "../dservice/deliveryboyservice.service"
 
 @Component({
   selector: 'app-customerorderdetails',
@@ -14,7 +14,7 @@ import {PaymentdetailsmodalComponent} from "../paymentdetailsmodal/paymentdetail
 })
 export class CustomerorderdetailsComponent implements OnInit {
 
-  constructor(public dialog: MatDialog,private routeractivated: ActivatedRoute,private router: Router, private db: AngularFirestore) { }
+  constructor(public dser:DeliveryboyserviceService,   public dialog: MatDialog,private routeractivated: ActivatedRoute,private router: Router, private db: AngularFirestore) { }
 orderid:any;
 paymentid:any;
 orderdetails:any;
@@ -26,6 +26,12 @@ address:any;
 user:any;
 uid:any;
 payment:any;
+ismap:boolean = false;
+orderboyid:string;
+latd : any;
+longd :any;
+ostatus:boolean=false;
+status;any;
   ngOnInit() {
     this.orderid =  this.routeractivated.snapshot.paramMap.get('orderid');
     // console.log(this.orderid)
@@ -40,7 +46,11 @@ payment:any;
       if (doc.exists) {
         let counter = 0 ;
         this.orderdetails=doc.data()
-        console.log("order details",this.orderdetails)
+        this.orderboyid = this.orderdetails['orderboyid']
+        this.status = this.orderdetails['status']
+         if(this.orderdetails['status']=='Approved'){
+         this.ostatus = true;
+         }
         this.getpaymentdetails(this.orderdetails['paymentid']);
         const col = this.db.collection('Products');
         const queries = this.orderdetails['products'].map(el => col.doc(el).valueChanges());
@@ -57,12 +67,9 @@ payment:any;
           productid:this.orderdetails['products'][i]
         }
         this.products.push(m)
-        // console.log(m)
-        //  console.log("products",data[i])
-        //  console.log("id",this.orderdetails['products'][i])
-        //  console.log("quqn",this.orderdetails['quantity'][i])
+
        }
-console.log(this.products)
+      console.log(this.products)
 
       })
 
@@ -123,6 +130,7 @@ const dialogRef= this.dialog.open(PaymentdetailsmodalComponent, dialogConfig);
 
 checkstatus()
 {
+  this.ismap = !this.ismap;
 //check the status of order from this.orderdetails and goto another module and check delivary boy assigned or not
 }
 

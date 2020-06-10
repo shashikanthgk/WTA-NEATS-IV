@@ -9,6 +9,11 @@
 .mat-card-content:hover{
     transform: translate3d(1,2,3);
 }
+
+mat-card:hover {
+    background-color: #ccc;
+  }
+
 .name{
     float:right;
 }

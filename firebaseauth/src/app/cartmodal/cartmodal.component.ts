@@ -21,10 +21,17 @@ this.merchantid =  this.routeractivated.snapshot.paramMap.get('merchantid');
 
 let x = localStorage.getItem(this.merchantid)
 this.cart_products = JSON.parse(x);
-this.total = this.cart_products.reduce((sum, item) => sum + (item.quantity)*(item.product.price), 0)
 
+if(this.cart_products){
+this.total = this.cart_products.reduce((sum, item) => sum + (item.quantity)*(item.product.price), 0)
 if(this.cart_products.length==0){
   this.flag = true
+}
+}
+if(!this.cart_products)
+{
+  this.flag = true
+ 
 }
 console.log(this.cart_products)
 

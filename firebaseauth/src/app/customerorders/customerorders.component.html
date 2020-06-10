@@ -1,4 +1,6 @@
 
+<app-navbar  [merchantid]='merid'></app-navbar>
+
 <div class="container">
 
     <div *ngIf="ordersid.length!=0">
@@ -35,7 +37,11 @@
 </div>
 
 <div *ngIf="ordersid.length==0">
-<h1>Loading..........</h1>
+    <mat-card class="my-4">
+        <mat-card-content style="color: #e41b56;font-family: 'Merienda One'!important;">
+          No orders found🤔🤔🤔🤔🤔🤔🤔
+        </mat-card-content>
+      </mat-card>
 </div>
 </div>
     

@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { finalize } from "rxjs/operators";
 import { ImageService } from "src/app/shared/image.service";
-import { AuthService } from "/home/shashikanth/projects/Firebaseauth/firebaseauth/src/app/auth/auth.service";
+import { AuthService } from "/home/shashikanth/projects/WTAPROJECT/firebaseauth/src/app/auth/auth.service"
 import { Subscription } from "rxjs/internal/Subscription";
 
 @Component({
@@ -20,7 +20,7 @@ export class ImageComponent implements OnInit {
   uid: string;
   ismerchant: boolean = null;
   subscription: Subscription;
-
+  disable:boolean = true;
   formTemplate = new FormGroup({
     productname: new FormControl("", Validators.required),
     description: new FormControl(""),
@@ -81,6 +81,7 @@ export class ImageComponent implements OnInit {
   }
 
   onSubmit(formValue) {
+    this.disable = false;
     if (this.ismerchant) {
       this.isSubmitted = true;
       if (this.formTemplate.valid) {
@@ -100,6 +101,7 @@ export class ImageComponent implements OnInit {
                 console.log("merchantid ", this.uid);
                 this.service.insertImageDetails(formValue, this.uid);
                 this.resetForm();
+                this.disable = true;
               });
             })
           )

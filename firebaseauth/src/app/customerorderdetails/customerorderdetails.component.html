@@ -1,4 +1,6 @@
 
+<app-navbar  [merchantid]='merid'></app-navbar>
+
 <div class=" prg container" *ngIf="products.length==0">
     <h1>Loading....</h1>
       </div>
@@ -7,7 +9,7 @@
     
       <div class="container" *ngIf="products.length!=0">
         <div style="display: flex; justify-content: space-evenly;" class="my-4">
-          <h1 style="color: #e41b56;font-family: 'Merienda One'!important;"><span class="badge badge-default">Order Details </span></h1>
+          <h1 style="color: #e41b56;font-family: 'Merienda One'!important;"><span class="badge badge-default">Status : {{status}} </span></h1>
           <h1><span class="badge badge-pill badge-secondary">ID: {{orderid}}</span>
           </h1>
         </div>
@@ -41,7 +43,7 @@
           <mat-card-actions style="display: flex;align-items: center;justify-content: center;">
           <button (click)="deleteorder()"   mat-raised-button color="primary" class="fab">Delete</button>
           <button (click)="paymentdetails()"   mat-raised-button color="accent" class="fab">Payment Details</button>
-          <button (click)="checkstatus()"   mat-raised-button color="accent" class="fab">Track Order</button>
+          <button (click)="checkstatus()" [disabled]="!ostatus"  mat-raised-button color="accent" class="fab">Track Order</button>
 
            </mat-card-actions>
          </div>
@@ -49,3 +51,6 @@
     
     
       </div>
+
+
+      <app-dboylocation *ngIf="ismap" [orderboyid]='orderboyid'></app-dboylocation>

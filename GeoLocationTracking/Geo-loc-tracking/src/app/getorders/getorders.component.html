@@ -1,0 +1,35 @@
+
+<div style="margin-bottom: 30vh;">
+
+
+        <div *ngFor="let order of prom; let i = index">
+            <div style="cursor: pointer;" >
+            <mat-card class="my-4" style="margin: 20px;" >
+                    <mat-card-content>
+                        <div class="name" >
+                            <span>Order ID:</span><span style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;color: blue;
+                            ">{{order.oid}}</span>  
+                          </div>
+                        <div class="name" style="color: rgb(235, 22, 189);font-family: 'Acme', sans-serif;">
+                            <span >
+                                {{order.name}}
+                            </span>
+                        </div>
+
+
+                        <div style="margin:1vh">
+                            <button mat-raised-button color="warn"  (click)="update(i)" >update</button>
+                         </div>
+                     
+                    </mat-card-content>
+                
+    
+            </mat-card>
+    
+        </div>
+ 
+    
+</div>
+
+
+    

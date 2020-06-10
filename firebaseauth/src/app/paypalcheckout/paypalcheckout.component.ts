@@ -4,7 +4,8 @@ import { Router } from "@angular/router";
 import { AngularFirestore } from "@angular/fire/firestore";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA,MatDialogConfig} from '@angular/material';
 import { SuccessmodalComponent } from '../successmodal/successmodal.component';
-
+import {SendmsgserviceService} from "../msgservice/sendmsgservice.service"
+import { SendcustommsgComponent } from '../sendcustommsg/sendcustommsg.component';
 declare let paypal: any;
 
 @Component({
@@ -25,7 +26,7 @@ export class PaypalcheckoutComponent implements OnInit {
   texterror:string;
   merchantid:string;
   quantity:any = [];
-  constructor(private routeractivated: ActivatedRoute,private router: Router, private db: AngularFirestore,    public dialog: MatDialog,
+  constructor(public msgser:SendmsgserviceService,   private routeractivated: ActivatedRoute,private router: Router, private db: AngularFirestore,    public dialog: MatDialog,
     ) { }
 
   ngOnInit() {
@@ -139,6 +140,7 @@ createorder(){
   };
   const dialogRef= this.dialog.open(SuccessmodalComponent, dialogConfig);
   localStorage.clear();
+  this.msgser.sendmessage(`Your order with ${this.orderid} placed successfully`,this.merchantid,this.userid,"general")
   })
   .catch(err => {
     console.log("errores", err);

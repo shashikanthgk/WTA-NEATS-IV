@@ -1,0 +1,44 @@
+
+<!-- <div *ngIf="isTracking">
+    <h2>
+        Lattitude {{latc}}
+    </h2>
+    <h2>
+        Longitude {{lngc}}
+    </h2>
+    <h2>{{temp}}</h2>
+</div> -->
+
+<div style="display: flex;flex-direction: column;align-items: center;">
+    <form [formGroup] = "formdata" (ngSubmit) = "onClickSubmit(formdata.value)" style="display: flex;flex-direction: column;align-items: center;" >
+    <mat-form-field style="width: 60vw; margin: 1vw;">
+        <mat-label>Your id </mat-label>
+        <input  matInput type = "text" name = "userid"  formControlName = "userid" placeholder="Ex. kyfwu57wFU67CY6VC" ngModel>
+    </mat-form-field>
+        <div style="margin: 1vh;">
+            <button mat-raised-button color="accent" type = "submit" value = "submit" >start</button>
+        </div>
+
+     </form>
+
+     <div style="margin:1vh">
+        <button mat-raised-button color="warn"  (click)="stop()" >stop</button>
+     </div>
+
+
+
+</div>
+
+<div style="display: flex;justify-content: space-around; margin: 5rem;" *ngIf="isTracking">
+    <agm-map [latitude]="latc"
+     [longitude]="lngc"
+      style="height: 70vh;width: 80vw;">
+    <agm-marker [latitude]="latc" [longitude]="lngc">
+        <agm-info-window>
+            <h3><strong>You are here!</strong></h3>
+        </agm-info-window>
+    </agm-marker>
+    </agm-map>
+    </div>
+
+<app-getorders [dboyid]="dboyid" *ngIf="dboyid"></app-getorders>

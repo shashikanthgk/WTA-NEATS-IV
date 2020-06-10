@@ -7,7 +7,8 @@ import { AuthService } from "../auth/auth.service";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA,MatDialogConfig} from '@angular/material';
 import {PaymentdetailsmodalComponent} from "../paymentdetailsmodal/paymentdetailsmodal.component";
 import {AddressmodalComponent} from "../addressmodal/addressmodal.component";
-import {AssigndelivaryboyComponent} from "../assigndelivaryboy/assigndelivaryboy.component"
+import {AssigndelivaryboyComponent} from "../assigndelivaryboy/assigndelivaryboy.component";
+import {SendmsgserviceService} from "../msgservice/sendmsgservice.service"
 @Component({
   selector: 'app-orderdetails',
   templateUrl: './orderdetails.component.html',
@@ -15,7 +16,7 @@ import {AssigndelivaryboyComponent} from "../assigndelivaryboy/assigndelivaryboy
 })
 export class OrderdetailsComponent implements OnInit,OnDestroy {
 
-  constructor(    private auth: AuthService,
+  constructor(public msgservice:SendmsgserviceService,    private auth: AuthService,
     private routeractivated: ActivatedRoute,private router: Router, private db: AngularFirestore, public dialog: MatDialog,) { }
   orderid:any;
   paymentid:any;
@@ -52,8 +53,15 @@ isapproved:boolean=false;
       if (doc.exists) {
         let counter = 0 ;
         this.orderdetails=doc.data()
-        this.isapproved = this.orderdetails['status']
+        // this.isapproved = this.orderdetails['status']
         console.log("order details",this.orderdetails)
+        if(this.orderdetails['status']=="Not approved")
+        {
+          this.isapproved = false
+        }
+        else{
+          this.isapproved = true
+        }
         this.address = this.orderdetails['address']
         this.getpaymentdetails(this.orderdetails['paymentid']);
         const col = this.db.collection('Products');
@@ -61,6 +69,7 @@ isapproved:boolean=false;
         combineLatest(...queries)
               .subscribe(data=>{
                 console.log(data)
+             
        for (var i=0;i<data.length;i++)
        {
         var m = {
@@ -171,7 +180,14 @@ confirmorder()
         status.push("order assigned");
         console.log("orderid stastt",orders,status)
         this.db.doc(`Delivaryboys/${data['id']}`).update({orders:orders,status:status})
-      .then(res=>{console.log("sucess",res)}).catch(err=>{console.log("error",err)});
+      .then(res=>{
+        this.db.doc(`Orders/${this.orderid}`).get().subscribe(orderdetails=>{
+        let message = `Your order with order id ${this.orderid} is confirmed by our merchant  successfully. Mr. ${doc.data()['name']} is bringing your order, and use his phone number ${doc.data()['phone']} for further details. Thank you`
+        this.msgservice.sendmessage(message,this.uid,orderdetails.data()['userid'],"specific")
+        })
+        console.log("sucess",res)})
+        .catch(err=>{
+        console.log("error",err)});
       })
     
     

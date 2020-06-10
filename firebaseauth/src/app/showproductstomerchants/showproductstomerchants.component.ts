@@ -110,12 +110,15 @@ export class ShowproductstomerchantsComponent implements OnInit, OnDestroy {
 
   dialogRef.afterClosed().subscribe(
     data => {console.log("Dialog output:", data)
+    if(data!=0){
     this.products[i]['name'] = data['name'];
     this.products[i]['description']=data['description'];
     this.products[i]['price'] = data['price'];
     this.db.doc(`Products/${this.productsid[i]}`).update({description:data['description'],name: data['name'],price:data['price']})
     .then(res=>{console.log("sucess",res)}).catch(err=>{console.log("error",err)});
-  });   
+    }
+  });  
+
     
 
 }
@@ -129,7 +132,9 @@ openAlertwindow(index) {
   alertdialogConfig.disableClose = true;
   alertdialogConfig.autoFocus = true;
   alertdialogConfig.data = {
-    name: this.products[index]['name']
+    name: this.products[index]['name'],
+    message1:"Item with name ",
+    message2:" will be deleted permanently"
 };
 const alertdialogRef = this.dialog.open(AlertmodalComponent, alertdialogConfig);
 

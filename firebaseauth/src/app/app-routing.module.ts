@@ -19,6 +19,9 @@ import {CustomerordersComponent} from "./customerorders/customerorders.component
 import {CustomerorderdetailsComponent} from "./customerorderdetails/customerorderdetails.component"
 import {GetdelivaryboysComponent} from "./getdelivaryboys/getdelivaryboys.component"
 import { AdddelivaryboyComponent } from './adddelivaryboy/adddelivaryboy.component';
+import {CustmailboxComponent} from "./custmailbox/custmailbox.component";
+import {SendcustommsgComponent} from "./sendcustommsg/sendcustommsg.component";
+import {MerchantmailboxComponent} from "./merchantmailbox/merchantmailbox.component"
 const routes: Routes = [
   // { path: "", redirectTo: "image/upload", pathMatch: "full" },
   {
@@ -49,6 +52,18 @@ const routes: Routes = [
   {
     path: "showmerchants",
     component: ShowMerchantComponent
+  },
+  {
+    path: "mailbox",
+    component: CustmailboxComponent
+  },
+  {
+    path: "merchantmailbox",
+    component: MerchantmailboxComponent
+  },
+  {
+    path: "sendmsg",
+    component: SendcustommsgComponent
   },
   {
     path: "Addproduct",

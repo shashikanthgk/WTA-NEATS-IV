@@ -19,6 +19,14 @@
     </mat-form-field>
     <p *ngIf="invalidphone" style="color: red;">Invalid phone number format</p>
 
+    
+    <mat-form-field>
+      <input matInput
+              placeholder="Email"
+             formControlName="email" type="email" ng-required="true" ng-minlength=10 (input)="oninvalidemail($event.target.value)">
+  </mat-form-field>
+  <p *ngIf="invalidemail" style="color: red;">Invalid pemail format</p>
+
 </mat-dialog-content>
 
 <mat-dialog-actions>

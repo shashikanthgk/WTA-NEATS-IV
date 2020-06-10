@@ -8,6 +8,7 @@ import { AuthService } from "../auth.service";
 })
 export class RegistrationComponent implements OnInit {
   authError: any;
+  isdisabled:boolean=true;
 
   constructor(private auth: AuthService) {}
   ngOnInit() {
@@ -28,6 +29,7 @@ export class RegistrationComponent implements OnInit {
     body.appendChild(script);
   }
   createUser(frm) {
+    this.isdisabled  = false;
     this.auth.createUser(frm.value);
   }
 }

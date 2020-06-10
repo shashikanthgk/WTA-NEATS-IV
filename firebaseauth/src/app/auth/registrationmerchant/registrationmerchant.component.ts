@@ -8,7 +8,7 @@ import { AuthService } from "../auth.service";
 })
 export class RegistrationmerchantComponent implements OnInit {
   authError: any;
-
+  isdisabled:boolean = true;
   constructor(private auth: AuthService) {}
   ngOnInit() {
     this.loadScript("assets/js/main.js");
@@ -28,6 +28,7 @@ export class RegistrationmerchantComponent implements OnInit {
     body.appendChild(script);
   }
   createMerchant(frm) {
+    this.isdisabled = false;
     this.auth.createMerchant(frm.value);
   }
 }

@@ -1,39 +1,33 @@
+<app-navbar  [merchantid]='merid'></app-navbar>
 
 <div class="container">
     <div style="display: flex; justify-content: space-evenly;" class="my-4">
         <button (click)="adddelivaryboys()"  mat-raised-button color="accent" style="margin-top: 6px;">Adddelivaryboy</button>
 
       </div>
-    <div *ngIf="delivaryboys.length!=0" >
-    <mat-form-field style="width: 100%;">
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" style="width: 90%;">
-      </mat-form-field>
+    <div *ngIf="delivaryboys.length!=0" style="display: flex;flex-direction: column; justify-content: space-evenly;" >
 
         <div *ngFor="let boys of delivaryboys; let i = index">
             <div >
-            <mat-card class="my-4" >
-                    <mat-card-content>
-                        <div class="name" style="color: crimson;">
+            <mat-card class="my-4" style="display: flex;flex-direction: column; justify-content: space-evenly;" >
+                    <mat-card-content style="display: flex; justify-content: space-around;">
+                        <h4  style="color: crimson;">
                             <span >
                                 {{boys.name}}
                             </span>
                             
-                        </div>
-                        <div class="name" >
+                        </h4>
+                  
+                        <h4 >
                           <span>Phone:</span><span style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;color: blue;
                           ">{{boys.phone}}</span>  
-                        </div>
-                        <div>
-                            <button (click)="gotodetails(i)"  mat-raised-button color="primary" style="margin-top: 6px;">Details</button>
-    
-                            </div>
-                        <div class="logo">
-                            <img src="assets/img/user2.png"/>
-                        </div>
-                     
-                    </mat-card-content>
-                
-    
+                    </h4>
+                        
+                     <div>
+                        <button mat-raised-button color="warn"  (click)="delete(i)" >Delete</button>
+                     </div>
+                    </mat-card-content>   
+
             </mat-card>
     
         </div>

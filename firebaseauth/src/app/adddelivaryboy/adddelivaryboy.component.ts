@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+
 @Component({
   selector: 'app-adddelivaryboy',
   templateUrl: './adddelivaryboy.component.html',
@@ -18,7 +19,7 @@ export class AdddelivaryboyComponent implements OnInit {
  status:any=[]
  invalidname:boolean=false;
  invalidphone:boolean=false;
-
+ invalidemail:boolean=false;
   constructor(public fb: FormBuilder,private routeractivated: ActivatedRoute,private router: Router, private db: AngularFirestore, public dialogRef: MatDialogRef<AdddelivaryboyComponent>,
     @Inject(MAT_DIALOG_DATA) data) { 
       this.merchantid = data['merchantid']
@@ -28,7 +29,8 @@ export class AdddelivaryboyComponent implements OnInit {
 
     this.form = this.fb.group({
       name:["", [Validators.required]],
-      phone:["", [Validators.required]]
+      phone:["", [Validators.required]],
+      email:["", [Validators.required]] 
     });
 
   }
@@ -57,14 +59,25 @@ export class AdddelivaryboyComponent implements OnInit {
     this.invalidphone = true;
 
 }
-  }
+}
+oninvalidemail(email){
+  var emailp = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if(email.match(emailp)){
+  this.invalidemail = false;
+}
+  else{
+  this.invalidemail = true;
+
+}
+}
 
   save() {
     let orderboyid;
     console.log(this.form.value)
     var phoneno = /^\d{10}$/;
     var nameo = /^\s*$/
-    if(!this.form.value['name'].match(nameo) &&  this.form.value['phone'].match(phoneno)){
+    var email = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+    if(!this.form.value['name'].match(nameo) &&  this.form.value['phone'].match(phoneno) && this.form.value['email'].match(email)){
       this.db.collection(`Delivaryboys/`).add({
         name:this.form.value['name'],
         merchantid:this.merchantid,
@@ -72,15 +85,18 @@ export class AdddelivaryboyComponent implements OnInit {
         lattitude:0,
         longitude:0,
         phone:this.form.value['phone'],
+        email:this.form.value['email'],
         status:this.status,
     
       }).then(res=>{
         
         console.log("delivary boy added sucess fully", res["id"]);
+
         var sendback = {
           name:this.form.value['name'],
           id:res['id'],
-          phone:this.form.value['phone']
+          phone:this.form.value['phone'],
+          email:this.form.value['email']
         }
         this.dialogRef.close(sendback);
 
