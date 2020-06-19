@@ -3,6 +3,7 @@ import {DboyserviceService} from "../service/dboyservice.service"
 import {ActivatedRoute,Router} from "@angular/router";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { async } from '@angular/core/testing';
+import { first, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-getorders',
@@ -20,11 +21,12 @@ export class GetordersComponent implements OnInit {
     this.prom = []
   let p2  =  new Promise((resolve2,reject2)=>{
     this.getorders(this.dboyid).subscribe((data:any)=>{
-  
-
+      console.log(data);
+      this.prom = []
       data['orders'].forEach(oid => {
       
        let p1 =  this.getcidbyoid(oid).subscribe(cid=>{
+         console.log(cid);
           if(cid['status']=='order assigned'){
           let x =   new Promise((resolve,reject)=>
             {
@@ -33,12 +35,14 @@ export class GetordersComponent implements OnInit {
                   name : data['firstname']+data['lastname'],
                   oid :oid
                 }
+                console.log(x);
                  resolve(x)
                  
                })
             })
           
             x.then(data=>{
+              console.log(data)
               this.prom.push(data);
             })
           }
@@ -63,16 +67,16 @@ export class GetordersComponent implements OnInit {
 getorders(dboyid)
 {
 
-  return this.db.collection('Delivaryboys').doc(`/${dboyid}`).valueChanges()
+  return this.db.collection('Delivaryboys').doc(`/${dboyid}`).valueChanges().pipe(take(1))
 }
 
  getcidbyoid(oid)
 {
-    return this.db.collection('Orders').doc(`/${oid}`).valueChanges()
+    return this.db.collection('Orders').doc(`/${oid}`).valueChanges().pipe(take(1))
 }
 getnamebycid(cid)
 {
-  return this.db.collection('Users').doc(`/${cid}`).valueChanges()
+  return this.db.collection('Users').doc(`/${cid}`).valueChanges().pipe(take(1))
 }
 update(index)
 {

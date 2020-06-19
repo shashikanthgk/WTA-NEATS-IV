@@ -169,7 +169,7 @@ confirmorder()
     dialogRef.afterClosed().subscribe(data=>{
       console.log("data income",data)
       if(data!=0){
-        this.db.doc(`Orders/${this.orderid}`).update({orderboyid:data['id'],status:"Approved"})
+        this.db.doc(`Orders/${this.orderid}`).update({orderboyid:data['id'],status:"order assigned"})
       .then(res=>{console.log("sucess",res)}).catch(err=>{console.log("error",err)});
       this.isapproved = true;
       this.db.doc(`Delivaryboys/${data['id']}`).get().subscribe(doc=>{

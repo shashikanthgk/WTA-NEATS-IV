@@ -1,13 +1,4 @@
 
-<!-- <div *ngIf="isTracking">
-    <h2>
-        Lattitude {{latc}}
-    </h2>
-    <h2>
-        Longitude {{lngc}}
-    </h2>
-    <h2>{{temp}}</h2>
-</div> -->
 
 <div style="display: flex;flex-direction: column;align-items: center;">
     <form [formGroup] = "formdata" (ngSubmit) = "onClickSubmit(formdata.value)" style="display: flex;flex-direction: column;align-items: center;" >
@@ -29,6 +20,8 @@
 
 </div>
 
+<app-getorders [dboyid]="dboyid" *ngIf="dboyid"></app-getorders>
+
 <div style="display: flex;justify-content: space-around; margin: 5rem;" *ngIf="isTracking">
     <agm-map [latitude]="latc"
      [longitude]="lngc"
@@ -41,4 +34,3 @@
     </agm-map>
     </div>
 
-<app-getorders [dboyid]="dboyid" *ngIf="dboyid"></app-getorders>

@@ -25,6 +25,11 @@ import {MerchantmailboxComponent} from "./merchantmailbox/merchantmailbox.compon
 const routes: Routes = [
   // { path: "", redirectTo: "image/upload", pathMatch: "full" },
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'login'
+  },
+  {
     path: "image",
     component: ImagesComponent,
     children: [{ path: "upload", component: ImageComponent }]
@@ -111,7 +116,7 @@ const routes: Routes = [
   },
   {
     path: "",
-    redirectTo: "/home",
+    redirectTo: "login",
     pathMatch: "full"
   }
 ];

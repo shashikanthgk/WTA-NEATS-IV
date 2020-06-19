@@ -134,7 +134,6 @@ export class AuthService {
 
 resetpassword(email)
 {
-  
   return this.afAuth.auth.sendPasswordResetEmail(
     email).then(eror=>{
       console.log("email activation link sent")
@@ -166,9 +165,7 @@ resetpassword(email)
     
         default:
           this.emailerror ='<strong>Oops! Something went wrong. Try again later.</strong>'
-          break;
-    
-    
+          break;  
   }
   return this.emailerror   
 

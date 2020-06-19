@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit {
             if (this.userdata) {
               console.log("insuide");
               this.ismechant = true;
+              this.router.navigateByUrl('/merchantproducts')
 
               // console.log(this.userdata);
             } else {
@@ -43,6 +44,8 @@ export class HomeComponent implements OnInit {
                 console.log(this.userdata);
 
                 this.ismechant = false;
+                this.router.navigateByUrl('/showmerchants')
+
               });
             }
           });

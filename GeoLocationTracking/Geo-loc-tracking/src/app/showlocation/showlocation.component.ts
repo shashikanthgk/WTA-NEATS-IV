@@ -57,6 +57,7 @@ dboyid:any = null;
 
 
  async onClickSubmit(data) {
+  this.isTracking  = true;
    this.dboyid = data.userid;
     // let utemp =await this.fire.doc(`/Delivaryboys/${data.userid}`)
         this.itemDoc =await this.fire.collection('/Delivaryboys').doc(data.userid)
@@ -64,7 +65,6 @@ dboyid:any = null;
 
       this.temp = data.userid
       console.log("shashi ",this.temp);
-      this.isTracking  = true;
       this.id   =  navigator.geolocation.watchPosition(pos=>{
         const crd = pos.coords;
         this.latc = crd.latitude
@@ -76,7 +76,6 @@ dboyid:any = null;
           }).then(err=>{
           console.log("err",err)
           });
-  
         }
   
   
@@ -106,15 +105,13 @@ this.temp = event.target.value
 
   ngOnDestroy()
   {
-    this.isTracking = false;
     navigator.geolocation.clearWatch( this.id ); 
   }
 
 setLocation(userid,lattitude,longitude) {
     console.log("called",userid)
       return this.db.object(`Delivaryboys/${this.temp}`).update({ lattitude:lattitude, longitude: longitude });
-    
-  }
+}
 
   setLocation2(userid,lattitude,longitude) {
     console.log("called",userid)

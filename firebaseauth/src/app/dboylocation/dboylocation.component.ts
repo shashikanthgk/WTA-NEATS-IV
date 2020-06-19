@@ -25,8 +25,6 @@ export class DboylocationComponent implements OnInit,OnDestroy {
 
   username:any;
   ngOnInit() {
-
-
     this.getUserLocation();
     console.log("orderboy idddddddddd",this.orderboyid);
     let doc = this.dser.getdlocation(this.orderboyid);

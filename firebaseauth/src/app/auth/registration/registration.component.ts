@@ -13,7 +13,6 @@ export class RegistrationComponent implements OnInit {
   constructor(private auth: AuthService) {}
   ngOnInit() {
     this.loadScript("assets/js/main.js");
-
     this.auth.eventAuthError$.subscribe(data => {
       this.authError = data;
     });
@@ -28,7 +27,8 @@ export class RegistrationComponent implements OnInit {
     script.defer = true;
     body.appendChild(script);
   }
-  createUser(frm) {
+  createUser(frm)
+  {
     this.isdisabled  = false;
     this.auth.createUser(frm.value);
   }

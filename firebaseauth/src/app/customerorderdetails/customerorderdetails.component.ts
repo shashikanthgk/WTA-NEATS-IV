@@ -48,7 +48,7 @@ status;any;
         this.orderdetails=doc.data()
         this.orderboyid = this.orderdetails['orderboyid']
         this.status = this.orderdetails['status']
-         if(this.orderdetails['status']=='Approved'){
+         if(this.orderdetails['status']=='order assigned'){
          this.ostatus = true;
          }
         this.getpaymentdetails(this.orderdetails['paymentid']);

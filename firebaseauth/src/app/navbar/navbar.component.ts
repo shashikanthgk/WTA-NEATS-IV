@@ -99,14 +99,17 @@ ngOnChanges(changes: SimpleChanges) {
 gotocartpage(){
   console.log("on navbar",this.ismechant)
  console.log("shashi rourter")
- this.router.navigate(['/cartpage',this.uid ])
+ this.router.navigate(['/cartpage',this.merchantid ])
 }
 
 gotoshowmerchant(){
-  if(this.uid){ this.router.navigateByUrl('/showmerchants')}
+  if(this.uid && !this.ismechant){ this.router.navigateByUrl('/showmerchants')}
+  else if(this.ismechant)
+  {
+    this.router.navigateByUrl('/merchantproducts')
+  }
   else{
     this.router.navigateByUrl('/login')
-
   }
  
 }
